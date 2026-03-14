@@ -1,0 +1,393 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #000080; /* Classic MS-DOS blue desktop */
+    font-family: 'Perfect DOS VGA 437', 'DOS VGA', 'Courier New', monospace;
+}
+
+/* Scanline overlay for CRT effect */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.04) 2px,
+        rgba(0,0,0,0.04) 4px
+    );
+    z-index: 9999;
+}
+
+.screen {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    background-color: #000080;
+}
+
+/* ── DOS Window ───────────────────────────────────── */
+.dos-window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100vw - 4px);
+    height: calc(100vh - 4px);
+    background-color: #000080;
+    border: 2px solid #fff;
+    display: flex;
+    flex-direction: column;
+    box-shadow:
+        inset -1px -1px 0 #000,
+        inset 1px 1px 0 #fff;
+}
+
+/* ── Title Bar ───────────────────────────────────── */
+.title-bar {
+    background-color: #000080;
+    color: #fff;
+    height: 20px;
+    min-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2px;
+    border-bottom: 1px solid #aaa;
+    user-select: none;
+}
+
+.title-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.title-icon {
+    width: 14px;
+    height: 14px;
+    background: #aaa;
+    border: 1px solid #fff;
+    font-size: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    flex-shrink: 0;
+}
+
+.title-text {
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    color: #fff;
+}
+
+.title-buttons {
+    display: flex;
+    gap: 2px;
+}
+
+.title-btn {
+    width: 16px;
+    height: 14px;
+    background-color: #aaa;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+    border-bottom: 1px solid #555;
+    border-right: 1px solid #555;
+    font-size: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #000;
+    font-family: inherit;
+}
+
+.title-btn:active {
+    border-top: 1px solid #555;
+    border-left: 1px solid #555;
+    border-bottom: 1px solid #fff;
+    border-right: 1px solid #fff;
+}
+
+/* ── Menu Bar ─────────────────────────────────────── */
+.menu-bar {
+    background-color: #aaa;
+    height: 18px;
+    min-height: 18px;
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    border-bottom: 1px solid #555;
+    gap: 16px;
+}
+
+.menu-item {
+    position: relative;
+    font-size: 12px;
+    color: #000;
+    cursor: pointer;
+    padding: 1px 6px;
+}
+
+.menu-item:hover, .menu-item.active {
+    background-color: #000080;
+    color: #fff;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #aaa;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #333;
+    border-right: 2px solid #333;
+    min-width: 260px;
+    z-index: 1000;
+    padding: 2px 0;
+}
+
+.dropdown.open {
+    display: block;
+}
+
+.dropdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 16px 3px 20px;
+    font-size: 12px;
+    color: #000;
+    cursor: pointer;
+    white-space: nowrap;
+    gap: 24px;
+}
+
+.dropdown-item:hover {
+    background-color: #000080;
+    color: #fff;
+}
+
+.dropdown-item .shortcut {
+    color: #444;
+    font-size: 11px;
+}
+
+.dropdown-item:hover .shortcut {
+    color: #aaa;
+}
+
+.dropdown-separator {
+    border: none;
+    border-top: 1px solid #888;
+    margin: 3px 4px;
+}
+
+.dropdown-item.disabled {
+    color: #666;
+    cursor: default;
+    pointer-events: none;
+}
+
+.swatch {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border: 1px solid #333;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+.check {
+    display: inline-block;
+    width: 12px;
+    font-size: 11px;
+    color: #000;
+}
+
+/* ── Main Content ─────────────────────────────────── */
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: #000;
+    color: #aaa;
+    padding: 8px 10px;
+    font-size: 14px;
+}
+
+.prompt-line {
+    color: #aaa;
+    font-size: 13px;
+    margin-bottom: 6px;
+    flex-shrink: 0;
+}
+
+.prompt-line span {
+    color: #fff;
+}
+
+/* ── Input Area ───────────────────────────────────── */
+.input-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+}
+
+.input-prompt {
+    color: #fff;
+    font-size: 14px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+#input-text {
+    flex: 1;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 14px;
+    caret-color: #fff;
+    padding: 0;
+}
+
+#input-text::placeholder {
+    color: #555;
+}
+
+.cursor-blink {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background-color: #fff;
+    animation: blink 1s step-end infinite;
+    vertical-align: text-bottom;
+    margin-left: 1px;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* ── Generate Button ──────────────────────────────── */
+.btn-row {
+    margin-bottom: 10px;
+    flex-shrink: 0;
+}
+
+.dos-btn {
+    background-color: #aaa;
+    color: #000;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #333;
+    border-right: 2px solid #333;
+    padding: 2px 16px;
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+    outline: none;
+    letter-spacing: 0.5px;
+}
+
+.dos-btn:active {
+    border-top: 2px solid #333;
+    border-left: 2px solid #333;
+    border-bottom: 2px solid #fff;
+    border-right: 2px solid #fff;
+    padding: 3px 15px 1px 17px;
+}
+
+.dos-btn:focus {
+    outline: 1px dotted #000;
+    outline-offset: -3px;
+}
+
+/* ── Divider ──────────────────────────────────────── */
+.divider {
+    border: none;
+    border-top: 1px solid #555;
+    margin: 4px 0 8px 0;
+    flex-shrink: 0;
+}
+
+/* ── Output Area ──────────────────────────────────── */
+.output-label {
+    color: #aaa;
+    font-size: 12px;
+    margin-bottom: 4px;
+    flex-shrink: 0;
+}
+
+#output {
+    flex: 1;
+    background-color: #000;
+    color: #0f0;
+    white-space: pre;
+    overflow: auto;
+    font-family: inherit;
+    font-size: 13px;
+    line-height: 1.2;
+    padding: 4px 0;
+    min-height: 0;
+}
+
+/* ── Status Bar ───────────────────────────────────── */
+.status-bar {
+    background-color: #aaa;
+    height: 18px;
+    min-height: 18px;
+    display: flex;
+    align-items: center;
+    padding: 0 6px;
+    border-top: 1px solid #fff;
+    gap: 20px;
+}
+
+.status-item {
+    font-size: 11px;
+    color: #000;
+    border-right: 1px solid #888;
+    padding-right: 12px;
+}
+
+.status-item:last-child {
+    border-right: none;
+    margin-left: auto;
+}
+
+/* Scrollbar styling */
+#output::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+#output::-webkit-scrollbar-track {
+    background: #555;
+}
+#output::-webkit-scrollbar-thumb {
+    background: #aaa;
+    border: 1px solid #fff;
+}

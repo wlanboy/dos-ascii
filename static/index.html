@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOS ASCII Art Generator</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&family=IBM+Plex+Mono&display=swap">
+    <link rel="stylesheet" href="/static/dos.css">
+</head>
+<body>
+    <div class="dos-window">
+        <!-- Title Bar -->
+        <div class="title-bar">
+            <div class="title-bar-left">
+                <div class="title-icon">■</div>
+                <span class="title-text">ASCII Art Generator - [C:\ASCII.EXE]</span>
+            </div>
+            <div class="title-buttons">
+                <button class="title-btn" title="Minimize">▼</button>
+                <button class="title-btn" title="Maximize">▲</button>
+                <button class="title-btn" title="Close">✕</button>
+            </div>
+        </div>
+
+        <!-- Menu Bar -->
+        <div class="menu-bar">
+
+            <span class="menu-item" id="menu-file" onclick="toggleMenu(event,'dropdown-file')">File
+                <div class="dropdown" id="dropdown-file">
+                    <div class="dropdown-item" onclick="newFile()">
+                        <span>New</span>
+                        <span class="shortcut">Ctrl+N</span>
+                    </div>
+                    <hr class="dropdown-separator">
+                    <div class="dropdown-item disabled">
+                        <span>Exit</span>
+                        <span class="shortcut">Alt+F4</span>
+                    </div>
+                </div>
+            </span>
+
+            <span class="menu-item" id="menu-edit" onclick="toggleMenu(event,'dropdown-edit')">Edit
+                <div class="dropdown" id="dropdown-edit">
+                    <div class="dropdown-item" onclick="copyAscii()">
+                        <span>Copy ASCII Art</span>
+                        <span class="shortcut">Ctrl+C</span>
+                    </div>
+                    <div class="dropdown-item" onclick="copyMarkdown()">
+                        <span>Copy as Markdown</span>
+                        <span class="shortcut">Ctrl+M</span>
+                    </div>
+                </div>
+            </span>
+
+            <span class="menu-item" id="menu-view" onclick="toggleMenu(event,'dropdown-view')">View
+                <div class="dropdown" id="dropdown-view">
+                    <div class="dropdown-item" onclick="setFont('courier')">
+                        <span><span class="check" id="check-font-courier">✓</span> Courier New</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setFont('vt323')">
+                        <span><span class="check" id="check-font-vt323"> </span> VT323</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setFont('sharetech')">
+                        <span><span class="check" id="check-font-sharetech"> </span> Share Tech Mono</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setFont('ibmplex')">
+                        <span><span class="check" id="check-font-ibmplex"> </span> IBM Plex Mono</span>
+                    </div>
+                </div>
+            </span>
+
+            <span class="menu-item" id="menu-options" onclick="toggleMenu(event,'dropdown-options')">Options
+                <div class="dropdown" id="dropdown-options">
+                    <div class="dropdown-item" onclick="setColor('green')">
+                        <span><span class="swatch" style="background:#0f0"></span> Classic Green</span>
+                        <span class="check" id="check-color-green">✓</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('amber')">
+                        <span><span class="swatch" style="background:#ffb000"></span> Amber</span>
+                        <span class="check" id="check-color-amber"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('cyan')">
+                        <span><span class="swatch" style="background:#0ff"></span> Cyan</span>
+                        <span class="check" id="check-color-cyan"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('white')">
+                        <span><span class="swatch" style="background:#fff;border-color:#888"></span> White</span>
+                        <span class="check" id="check-color-white"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('yellow')">
+                        <span><span class="swatch" style="background:#ff0"></span> Neon Yellow</span>
+                        <span class="check" id="check-color-yellow"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('orange')">
+                        <span><span class="swatch" style="background:#ff6600"></span> Orange</span>
+                        <span class="check" id="check-color-orange"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('magenta')">
+                        <span><span class="swatch" style="background:#f0f"></span> Magenta</span>
+                        <span class="check" id="check-color-magenta"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('pink')">
+                        <span><span class="swatch" style="background:#ff69b4"></span> Hot Pink</span>
+                        <span class="check" id="check-color-pink"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('blue')">
+                        <span><span class="swatch" style="background:#00bfff"></span> Electric Blue</span>
+                        <span class="check" id="check-color-blue"> </span>
+                    </div>
+                </div>
+            </span>
+
+            <span class="menu-item" id="menu-help" onclick="toggleMenu(event,'dropdown-help')">Help
+                <div class="dropdown" id="dropdown-help">
+                    <div class="dropdown-item">
+                        <span>Generate ASCII Art</span>
+                        <span class="shortcut">Shift+Enter / Enter</span>
+                    </div>
+                    <hr class="dropdown-separator">
+                    <div class="dropdown-item">
+                        <span>About ASCII.EXE</span>
+                        <span class="shortcut">v1.0</span>
+                    </div>
+                </div>
+            </span>
+
+        </div>
+
+        <!-- Content -->
+        <div class="content" id="content">
+            <div class="prompt-line">
+                Microsoft(R) MS-DOS(R) Version 6.22<br>
+                <span>(C)Copyright Microsoft Corp 1981-1994.</span>
+            </div>
+            <div class="prompt-line">C:\ASCII&gt; <span id="cmd-echo"></span></div>
+
+            <div class="input-row">
+                <span class="input-prompt">Enter text&nbsp;&gt;</span>
+                <input type="text" id="input-text" placeholder="type something..." autocomplete="off" spellcheck="false" />
+                <span class="cursor-blink"></span>
+            </div>
+
+            <div class="btn-row">
+                <button class="dos-btn" onclick="generateASCII()" id="gen-btn">[ GENERATE ]</button>
+            </div>
+
+            <hr class="divider">
+
+            <div class="output-label">C:\ASCII&gt; OUTPUT:</div>
+            <div id="output"></div>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span class="status-item">READY</span>
+            <span class="status-item">C:\ASCII</span>
+            <span class="status-item" id="status-chars">CHARS: 0</span>
+            <span class="status-item" id="clock">00:00:00</span>
+        </div>
+    </div>
+
+    <script src="/static/exe.js"></script>
+</body>
+</html>
