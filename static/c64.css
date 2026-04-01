@@ -1,0 +1,264 @@
+/* ══════════════════════════════════════════════════════
+   C64 Theme — Commodore 64 demoscene look
+   Overrides dos.css when enabled.
+
+   C64 VICE palette used:
+     BLUE       #352879  — screen / window background
+     LIGHT BLUE #6c5eb5  — border / frame color
+     CYAN       #70a4b2  — UI text / prompts
+     LT. GREEN  #9ad284  — bright text / highlights
+     DARK       #1a1040  — deep shadow
+   ══════════════════════════════════════════════════════ */
+
+/* ── Global ───────────────────────────────────────── */
+html, body {
+    background-color: #6c5eb5; /* C64 border color */
+}
+
+body::after {
+    /* Stronger CRT scanlines — TV-style */
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 1px,
+        rgba(0, 0, 0, 0.10) 1px,
+        rgba(0, 0, 0, 0.10) 3px
+    );
+}
+
+/* ── DOS Window ───────────────────────────────────── */
+.dos-window {
+    background-color: #352879;
+    border-color: #6c5eb5;
+    box-shadow:
+        inset -1px -1px 0 #1a1040,
+        inset 1px 1px 0 #6c5eb5;
+}
+
+/* ── Title Bar ───────────────────────────────────── */
+.title-bar {
+    background-color: #352879;
+    color: #70a4b2;
+    border-bottom-color: #6c5eb5;
+}
+
+.title-icon {
+    background: #6c5eb5;
+    border-color: #70a4b2;
+    color: #1a1040;
+}
+
+.title-btn {
+    background-color: #6c5eb5;
+    border-top-color: #9ad284;
+    border-left-color: #9ad284;
+    border-bottom-color: #1a1040;
+    border-right-color: #1a1040;
+    color: #1a1040;
+}
+
+.title-btn:active {
+    border-top-color: #1a1040;
+    border-left-color: #1a1040;
+    border-bottom-color: #9ad284;
+    border-right-color: #9ad284;
+}
+
+/* ── Menu Bar ─────────────────────────────────────── */
+.menu-bar {
+    background-color: #352879;
+    border-bottom-color: #6c5eb5;
+}
+
+.menu-item {
+    color: #70a4b2;
+}
+
+.menu-item:hover, .menu-item.active {
+    background-color: #6c5eb5;
+    color: #1a1040;
+}
+
+/* ── Dropdowns ────────────────────────────────────── */
+.dropdown {
+    background-color: #352879;
+    border-top-color: #9ad284;
+    border-left-color: #9ad284;
+    border-bottom-color: #1a1040;
+    border-right-color: #1a1040;
+}
+
+.dropdown-item {
+    color: #70a4b2;
+}
+
+.dropdown-item:hover {
+    background-color: #6c5eb5;
+    color: #1a1040;
+}
+
+.dropdown-item .shortcut {
+    color: #588d43;
+}
+
+.dropdown-item:hover .shortcut {
+    color: #1a1040;
+}
+
+.dropdown-separator {
+    border-top-color: #6c5eb5;
+}
+
+.dropdown-label {
+    color: #6c5eb5;
+}
+
+.dropdown-item.disabled {
+    color: #3d3d6b;
+}
+
+.check {
+    color: #70a4b2;
+}
+
+.swatch {
+    border-color: #6c5eb5;
+}
+
+/* ── Mode Toggle Button ───────────────────────────── */
+.mode-btn {
+    background-color: #9ad284;
+    color: #1a1040;
+    border-color: #6c5eb5;
+}
+
+.mode-btn:hover {
+    background-color: #70a4b2;
+    border-color: #9ad284;
+}
+
+.mode-btn:active {
+    background-color: #588d43;
+}
+
+/* ── Main Content ─────────────────────────────────── */
+.content {
+    background-color: #352879;
+    color: #70a4b2;
+}
+
+.prompt-line {
+    color: #70a4b2;
+}
+
+.prompt-line span {
+    color: #9ad284;
+}
+
+/* ── Input ────────────────────────────────────────── */
+.input-prompt {
+    color: #9ad284;
+}
+
+#input-text {
+    background-color: #352879;
+    color: #9ad284;
+    caret-color: #9ad284;
+}
+
+#input-text::placeholder {
+    color: #4a3a7a;
+}
+
+.cursor-blink {
+    background-color: #9ad284;
+}
+
+/* ── Generate Button ──────────────────────────────── */
+.dos-btn {
+    background-color: #6c5eb5;
+    color: #1a1040;
+    border-top-color: #9ad284;
+    border-left-color: #9ad284;
+    border-bottom-color: #1a1040;
+    border-right-color: #1a1040;
+}
+
+.dos-btn:active {
+    border-top-color: #1a1040;
+    border-left-color: #1a1040;
+    border-bottom-color: #9ad284;
+    border-right-color: #9ad284;
+}
+
+.dos-btn:focus {
+    outline-color: #9ad284;
+}
+
+/* ── Divider ──────────────────────────────────────── */
+.divider {
+    border-top-color: #6c5eb5;
+}
+
+/* ── Output ───────────────────────────────────────── */
+.output-label {
+    color: #6c5eb5;
+}
+
+#output {
+    background-color: #352879;
+    color: #9ad284;
+}
+
+#output.glow-mode {
+    text-shadow:
+        0 0 5px currentColor,
+        0 0 12px currentColor,
+        0 0 28px currentColor;
+}
+
+/* ── Demo Scroller — C64 Raster Bar ──────────────── */
+/* Classic C64 demoscene rainbow raster interrupt bars */
+.scroller-bar {
+    color: #fff;
+    background: repeating-linear-gradient(90deg,
+        #68372b   0px,
+        #6f3d86  30px,
+        #352879  60px,
+        #588d43  90px,
+        #b8c76f 120px,
+        #70a4b2 150px,
+        #9ad284 180px,
+        #68372b 210px
+    );
+    background-size: 210px 100%;
+    animation: raster 3s linear infinite;
+    text-shadow: 0 0 4px #000, 0 0 8px #000;
+    border-top-color: #6c5eb5;
+}
+
+@keyframes raster {
+    from { background-position: 0 0; }
+    to   { background-position: 210px 0; }
+}
+
+/* ── Status Bar ───────────────────────────────────── */
+.status-bar {
+    background-color: #352879;
+    border-top-color: #6c5eb5;
+}
+
+.status-item {
+    color: #70a4b2;
+    border-right-color: #6c5eb5;
+}
+
+/* ── Scrollbar ────────────────────────────────────── */
+#output::-webkit-scrollbar-track {
+    background: #1a1040;
+}
+
+#output::-webkit-scrollbar-thumb {
+    background: #6c5eb5;
+    border-color: #9ad284;
+}
