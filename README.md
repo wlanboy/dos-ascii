@@ -22,8 +22,10 @@ ASCII-Art-Generator im MS-DOS-Stil. Text eingeben, ASCII-Art generieren – im L
 ### Mit uv
 
 ```bash
+uv lock --upgrade
 uv sync
-uv run python main.py
+uv run pyright
+uv run main.py
 ```
 
 ### Mit pip
