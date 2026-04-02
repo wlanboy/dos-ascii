@@ -45,10 +45,15 @@ const FONTS = {
 };
 
 const FIGLET_FONTS = [
-    'Standard', 'Banner', 'Banner3', 'Big', 'Block',
-    'Doom', 'Speed', 'Slant', 'Lean', 'Graffiti', 'Epic', 'Doh',
-    'Ogre', 'Roman', 'Script', 'Cosmike', 'Star Wars',
-    'Isometric1', 'Larry 3D', '3-D',
+    // Classic DOS
+    'Standard', 'Banner', 'Banner3', 'Big', 'Block', 'Colossal', 'Digital', 'Chunky', 'Broadway',
+    // Demoscene
+    'Doom', 'Speed', 'Slant', 'Lean', 'Graffiti', 'Epic', 'Doh', 'ANSI Shadow', 'Bloody', 'Poison',
+    // Retro / C64
+    'Ogre', 'Roman', 'Script', 'Cosmike', 'Star Wars', 'Gothic', 'Ghost',
+    // 3D
+    '3-D', '3D-ASCII', 'Henry 3D', 'Larry 3D', 'Larry 3D 2',
+    'Isometric1', 'Isometric2', 'Isometric3', 'Isometric4',
 ];
 
 const EFFECTS = ['none', 'shadow', 'mirror', 'flip'];
