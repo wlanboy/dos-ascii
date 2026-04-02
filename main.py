@@ -8,10 +8,14 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 FIGLET_FONTS = [
-    "standard", "banner", "banner3", "big", "block",
-    "doom", "speed", "slant", "lean", "graffiti", "epic", "doh",
-    "ogre", "roman", "script", "cosmic", "starwars",
-    "isometric1", "larry3d", "3-d",
+    # Classic DOS
+    "standard", "banner", "banner3", "big", "block", "colossal", "digital", "chunky", "broadway",
+    # Demoscene
+    "doom", "speed", "slant", "lean", "graffiti", "epic", "doh", "bloody", "poison",
+    # Retro / C64
+    "ogre", "roman", "script", "cosmic", "starwars", "gothic", "ghost",
+    # 3D
+    "3-d", "3d-ascii", "larry3d", "isometric1", "isometric2", "isometric3", "isometric4",
 ]
 
 
