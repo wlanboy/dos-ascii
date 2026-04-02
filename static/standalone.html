@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOS ASCII Art Generator</title>
+    <link rel="stylesheet" href="fonts/fonts.css">
+    <link id="theme-dos" rel="stylesheet" href="dos.css">
+    <link id="theme-c64" rel="stylesheet" href="c64.css" disabled>
+</head>
+<body>
+    <div class="dos-window">
+        <!-- Title Bar -->
+        <div class="title-bar">
+            <div class="title-bar-left">
+                <div class="title-icon">■</div>
+                <span class="title-text" id="title-text">ASCII Art Generator - [C:\ASCII.EXE]</span>
+            </div>
+            <div class="title-buttons">
+                <button class="title-btn" title="Minimize">▼</button>
+                <button class="title-btn" title="Maximize">▲</button>
+                <button class="title-btn" title="Close">✕</button>
+            </div>
+        </div>
+
+        <!-- Menu Bar -->
+        <div class="menu-bar">
+
+            <span class="menu-item" id="menu-file" onclick="toggleMenu(event,'dropdown-file')">File
+                <div class="dropdown" id="dropdown-file">
+                    <div class="dropdown-item" onclick="newFile()">
+                        <span>New</span>
+                        <span class="shortcut">Ctrl+N</span>
+                    </div>
+                    <hr class="dropdown-separator">
+                    <div class="dropdown-item disabled">
+                        <span>Exit</span>
+                        <span class="shortcut">Alt+F4</span>
+                    </div>
+                </div>
+            </span>
+
+            <span class="menu-item" id="menu-edit" onclick="toggleMenu(event,'dropdown-edit')">Edit
+                <div class="dropdown" id="dropdown-edit">
+                    <div class="dropdown-item" onclick="copyAscii()">
+                        <span>Copy ASCII Art</span>
+                        <span class="shortcut">Ctrl+C</span>
+                    </div>
+                    <div class="dropdown-item" onclick="copyMarkdown()">
+                        <span>Copy as Markdown</span>
+                        <span class="shortcut">Ctrl+M</span>
+                    </div>
+                </div>
+            </span>
+
+            <span class="menu-item" id="menu-view" onclick="toggleMenu(event,'dropdown-view')">View
+                <div class="dropdown" id="dropdown-view">
+                    <div class="dropdown-label">── Display Font ────────</div>
+                    <div class="dropdown-item" onclick="setFont('courier')">
+                        <span><span class="check" id="check-font-courier">✓</span> Courier New</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setFont('vt323')">
+                        <span><span class="check" id="check-font-vt323"> </span> VT323</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setFont('sharetech')">
+                        <span><span class="check" id="check-font-sharetech"> </span> Share Tech Mono</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setFont('ibmplex')">
+                        <span><span class="check" id="check-font-ibmplex"> </span> IBM Plex Mono</span>
+                    </div>
+                </div>
+            </span>
+
+            <span class="menu-item" id="menu-style" onclick="toggleMenu(event,'dropdown-style')">Style
+                <div class="dropdown" id="dropdown-style">
+                    <div class="dropdown-label">── Classic DOS ─────────</div>
+                    <div class="dropdown-item" onclick="setFigletFont('Standard')">
+                        <span><span class="check" id="check-figlet-Standard">✓</span> Standard</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setFigletFont('Banner')">
+                        <span><span class="check" id="check-figlet-Banner"> </span> Banner</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setFigletFont('Banner3')">
+                        <span><span class="check" id="check-figlet-Banner3"> </span> Banner 3</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setFigletFont('Big')">
+                        <span><span class="check" id="check-figlet-Big"> </span> Big</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setFigletFont('Block')">
+                        <span><span class="check" id="check-figlet-Block"> </span> Block</span>
+                    </div>
+                    <hr class="dropdown-separator">
+                    <div class="dropdown-label">── Demoscene ───────────</div>
+                    <div class="dropdown-item" onclick="setFigletFont('Doom')">
+                        <span><span class="check" id="check-figlet-Doom"> </span> Doom</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setFigletFont('Speed')">
+                        <span><span class="check" id="check-figlet-Speed"> </span> Speed</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setFigletFont('Slant')">
+                        <span><span class="check" id="check-figlet-Slant"> </span> Slant</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setFigletFont('Lean')">
+                        <span><span class="check" id="check-figlet-Lean"> </span> Lean</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setFigletFont('Graffiti')">
+                        <span><span class="check" id="check-figlet-Graffiti"> </span> Graffiti</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setFigletFont('Epic')">
+                        <span><span class="check" id="check-figlet-Epic"> </span> Epic</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setFigletFont('Doh')">
+                        <span><span class="check" id="check-figlet-Doh"> </span> DOH (Mega)</span>
+                    </div>
+                    <hr class="dropdown-separator">
+                    <div class="dropdown-label">── Retro / C64 ─────────</div>
+                    <div class="dropdown-item" onclick="setFigletFont('Ogre')">
+                        <span><span class="check" id="check-figlet-Ogre"> </span> Ogre</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setFigletFont('Roman')">
+                        <span><span class="check" id="check-figlet-Roman"> </span> Roman</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setFigletFont('Script')">
+                        <span><span class="check" id="check-figlet-Script"> </span> Script</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setFigletFont('Cosmike')">
+                        <span><span class="check" id="check-figlet-Cosmike"> </span> Cosmic</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setFigletFont('Star Wars')">
+                        <span><span class="check" id="check-figlet-Star Wars"> </span> Star Wars</span>
+                    </div>
+                    <hr class="dropdown-separator">
+                    <div class="dropdown-label">── 3D ──────────────────</div>
+                    <div class="dropdown-item" onclick="setFigletFont('Isometric1')">
+                        <span><span class="check" id="check-figlet-Isometric1"> </span> Isometric</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setFigletFont('Larry 3D')">
+                        <span><span class="check" id="check-figlet-Larry 3D"> </span> Larry 3D</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setFigletFont('3-D')">
+                        <span><span class="check" id="check-figlet-3-D"> </span> 3-D</span>
+                    </div>
+                </div>
+            </span>
+
+            <span class="menu-item" id="menu-effects" onclick="toggleMenu(event,'dropdown-effects')">Effects
+                <div class="dropdown" id="dropdown-effects">
+                    <div class="dropdown-label">── Text Effect ─────────</div>
+                    <div class="dropdown-item" onclick="setEffect('none')">
+                        <span><span class="check" id="check-effect-none">✓</span> None</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setEffect('shadow')">
+                        <span><span class="check" id="check-effect-shadow"> </span> Shadow  ░▒</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setEffect('mirror')">
+                        <span><span class="check" id="check-effect-mirror"> </span> Mirror  ↔</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setEffect('flip')">
+                        <span><span class="check" id="check-effect-flip"> </span> Flip    ↕</span>
+                    </div>
+                    <hr class="dropdown-separator">
+                    <div class="dropdown-label">── Border ──────────────</div>
+                    <div class="dropdown-item" onclick="setBorder('none')">
+                        <span><span class="check" id="check-border-none">✓</span> No Border</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setBorder('single')">
+                        <span><span class="check" id="check-border-single"> </span> Single  ┌─┐</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setBorder('double')">
+                        <span><span class="check" id="check-border-double"> </span> Double  ╔═╗</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setBorder('block')">
+                        <span><span class="check" id="check-border-block"> </span> Block   █▀█</span>
+                    </div>
+                    <hr class="dropdown-separator">
+                    <div class="dropdown-label">── Display ─────────────</div>
+                    <div class="dropdown-item" onclick="toggleGlow()">
+                        <span><span class="check" id="check-glow"> </span> Neon Glow</span>
+                    </div>
+                    <div class="dropdown-item" onclick="toggleScroller()">
+                        <span><span class="check" id="check-scroller"> </span> Demo Scroller</span>
+                    </div>
+                </div>
+            </span>
+
+            <span class="menu-item" id="menu-options" onclick="toggleMenu(event,'dropdown-options')">Colors
+                <div class="dropdown" id="dropdown-options">
+                    <div class="dropdown-label">── DOS / ANSI ───────────</div>
+                    <div class="dropdown-item" onclick="setColor('green')">
+                        <span><span class="swatch" style="background:#0f0"></span> Classic Green</span>
+                        <span class="check" id="check-color-green">✓</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('amber')">
+                        <span><span class="swatch" style="background:#ffb000"></span> Amber</span>
+                        <span class="check" id="check-color-amber"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('cyan')">
+                        <span><span class="swatch" style="background:#0ff"></span> Cyan</span>
+                        <span class="check" id="check-color-cyan"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('white')">
+                        <span><span class="swatch" style="background:#fff;border-color:#888"></span> White</span>
+                        <span class="check" id="check-color-white"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('yellow')">
+                        <span><span class="swatch" style="background:#ff0"></span> Neon Yellow</span>
+                        <span class="check" id="check-color-yellow"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('orange')">
+                        <span><span class="swatch" style="background:#ff6600"></span> Orange</span>
+                        <span class="check" id="check-color-orange"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('magenta')">
+                        <span><span class="swatch" style="background:#f0f"></span> Magenta</span>
+                        <span class="check" id="check-color-magenta"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('pink')">
+                        <span><span class="swatch" style="background:#ff69b4"></span> Hot Pink</span>
+                        <span class="check" id="check-color-pink"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('blue')">
+                        <span><span class="swatch" style="background:#00bfff"></span> Electric Blue</span>
+                        <span class="check" id="check-color-blue"> </span>
+                    </div>
+                    <hr class="dropdown-separator">
+                    <div class="dropdown-label">── C64 Palette ──────────</div>
+                    <div class="dropdown-item" onclick="setColor('c64_white')">
+                        <span><span class="swatch" style="background:#ffffff;border-color:#888"></span> C64 White</span>
+                        <span class="check" id="check-color-c64_white"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('c64_cyan')">
+                        <span><span class="swatch" style="background:#70a4b2"></span> C64 Cyan</span>
+                        <span class="check" id="check-color-c64_cyan"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('c64_green')">
+                        <span><span class="swatch" style="background:#588d43"></span> C64 Green</span>
+                        <span class="check" id="check-color-c64_green"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('c64_blue')">
+                        <span><span class="swatch" style="background:#352879"></span> C64 Blue</span>
+                        <span class="check" id="check-color-c64_blue"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('c64_yellow')">
+                        <span><span class="swatch" style="background:#b8c76f"></span> C64 Yellow</span>
+                        <span class="check" id="check-color-c64_yellow"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('c64_purple')">
+                        <span><span class="swatch" style="background:#6f3d86"></span> C64 Purple</span>
+                        <span class="check" id="check-color-c64_purple"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('c64_red')">
+                        <span><span class="swatch" style="background:#68372b"></span> C64 Red</span>
+                        <span class="check" id="check-color-c64_red"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('c64_orange')">
+                        <span><span class="swatch" style="background:#6f4f25"></span> C64 Orange</span>
+                        <span class="check" id="check-color-c64_orange"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('c64_brown')">
+                        <span><span class="swatch" style="background:#433900"></span> C64 Brown</span>
+                        <span class="check" id="check-color-c64_brown"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('c64_lightred')">
+                        <span><span class="swatch" style="background:#9a6759"></span> C64 Lt. Red</span>
+                        <span class="check" id="check-color-c64_lightred"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('c64_darkgrey')">
+                        <span><span class="swatch" style="background:#444444"></span> C64 Dk. Grey</span>
+                        <span class="check" id="check-color-c64_darkgrey"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('c64_grey')">
+                        <span><span class="swatch" style="background:#6c6c6c"></span> C64 Grey</span>
+                        <span class="check" id="check-color-c64_grey"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('c64_lightgreen')">
+                        <span><span class="swatch" style="background:#9ad284"></span> C64 Lt. Green</span>
+                        <span class="check" id="check-color-c64_lightgreen"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('c64_lightblue')">
+                        <span><span class="swatch" style="background:#6c5eb5"></span> C64 Lt. Blue</span>
+                        <span class="check" id="check-color-c64_lightblue"> </span>
+                    </div>
+                    <div class="dropdown-item" onclick="setColor('c64_lightgrey')">
+                        <span><span class="swatch" style="background:#959595"></span> C64 Lt. Grey</span>
+                        <span class="check" id="check-color-c64_lightgrey"> </span>
+                    </div>
+                </div>
+            </span>
+
+            <span class="menu-item" id="menu-help" onclick="toggleMenu(event,'dropdown-help')">Help
+                <div class="dropdown" id="dropdown-help">
+                    <div class="dropdown-item">
+                        <span>Generate ASCII Art</span>
+                        <span class="shortcut">Enter</span>
+                    </div>
+                    <div class="dropdown-item">
+                        <span>New File</span>
+                        <span class="shortcut">Ctrl+N</span>
+                    </div>
+                    <div class="dropdown-item">
+                        <span>Copy as Markdown</span>
+                        <span class="shortcut">Ctrl+M</span>
+                    </div>
+                    <hr class="dropdown-separator">
+                    <div class="dropdown-item">
+                        <span>About ASCII.EXE</span>
+                        <span class="shortcut">v2.0</span>
+                    </div>
+                </div>
+            </span>
+        </div>
+
+        <!-- Content -->
+        <div class="content" id="content">
+            <div class="prompt-line" id="boot-line">
+                Microsoft(R) MS-DOS(R) Version 6.22<br>
+                <span>(C)Copyright Microsoft Corp 1981-1994.</span>
+            </div>
+            <div class="prompt-line" id="cmd-line">C:\ASCII&gt; <span id="cmd-echo"></span></div>
+
+            <div class="input-row">
+                <span class="input-prompt">Enter text&nbsp;&gt;</span>
+                <input type="text" id="input-text" placeholder="type something..." autocomplete="off" spellcheck="false" />
+                <span class="cursor-blink"></span>
+            </div>
+
+            <div class="btn-row">
+                <button class="dos-btn" onclick="generateASCII()" id="gen-btn">[ GENERATE ]</button>
+            </div>
+
+            <hr class="divider">
+
+            <div class="output-label" id="output-label">C:\ASCII&gt; OUTPUT:</div>
+            <div id="output"></div>
+        </div>
+
+        <!-- Demo Scroller -->
+        <div class="scroller-bar" id="scroller-bar" style="display:none">
+            <span class="scroller-text" id="scroller-text">*** DOS ASCII ART GENERATOR v2.0 *** WELCOME TO THE DEMOSCENE *** USE THE STYLE MENU TO PICK YOUR FONT *** EFFECTS: SHADOW, MIRROR, FLIP *** BORDERS: SINGLE, DOUBLE, BLOCK *** STANDALONE MODE - NO SERVER REQUIRED *** POWERED BY FIGLET.JS ***&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span class="status-item" id="status-msg">READY</span>
+            <span class="status-item">C:\ASCII</span>
+            <span class="status-item" id="status-chars">CHARS: 0</span>
+            <span class="status-item" id="clock">00:00:00</span>
+        </div>
+    </div>
+
+    <script src="figlet/figlet.js"></script>
+    <script src="standalone.js"></script>
+</body>
+</html>
