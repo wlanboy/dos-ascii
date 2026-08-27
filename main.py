@@ -66,17 +66,20 @@ def apply_border(art: str, style: str) -> str:
     return '\n'.join([top] + [row(l) for l in lines] + [bot])
 
 
+MAX_INPUT_LENGTH = 200
+
+
 @app.post("/generate-ascii", response_class=PlainTextResponse)
 async def generate_ascii(request: Request):
-    data = (await request.body()).decode()
+    data = (await request.body()).decode()[:MAX_INPUT_LENGTH]
     font   = request.query_params.get("font",   "standard")
     effect = request.query_params.get("effect", "none")
     border = request.query_params.get("border", "none")
 
-    try:
-        art = pyfiglet.figlet_format(data, font=font)
-    except pyfiglet.FontNotFound:
-        art = pyfiglet.figlet_format(data)
+    if font not in FIGLET_FONTS:
+        font = "standard"
+
+    art = pyfiglet.figlet_format(data, font=font)
 
     if effect == "shadow":
         art = apply_shadow(art)
