@@ -1,7 +1,7 @@
-from fastapi import FastAPI, Request
-from fastapi.responses import FileResponse, PlainTextResponse, JSONResponse
-from fastapi.staticfiles import StaticFiles
 import pyfiglet
+from fastapi import FastAPI, Request
+from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
