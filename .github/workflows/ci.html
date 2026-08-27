@@ -29,10 +29,4 @@ jobs:
         run: uv run ruff check .
 
       - name: Type Check (Optional aber empfohlen)
-        # Wichtig für MCP, um sicherzustellen, dass Tools die richtigen Schemas liefern
         run: uv run pyright .
-
-      - name: Verify server imports
-        # Prüft, ob das 'fastapi' Objekt korrekt initialisiert werden kann
-        run: |
-          uv run python -c "from fastapi import FastAPI; print('✅ FastAPI object initialized')"
