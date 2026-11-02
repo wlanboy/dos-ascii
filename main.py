@@ -1,11 +1,31 @@
 import pyfiglet
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# Alle Assets kommen vom eigenen Origin, Inline-Scripts und -Styles gibt es nicht
+SECURITY_HEADERS = {
+    "Content-Security-Policy": (
+        "default-src 'self'; base-uri 'none'; object-src 'none'; "
+        "form-action 'self'; frame-ancestors 'none'"
+    ),
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "no-referrer",
+    "X-Frame-Options": "DENY",
+    "Cross-Origin-Opener-Policy": "same-origin",
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+}
+
+
+@app.middleware("http")
+async def add_security_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers.update(SECURITY_HEADERS)
+    return response
 
 FIGLET_FONTS = [
     # Classic DOS
@@ -67,11 +87,25 @@ def apply_border(art: str, style: str) -> str:
 
 
 MAX_INPUT_LENGTH = 200
+# 200 Zeichen UTF-8 sind höchstens 800 Bytes, größere Bodies werden gar nicht erst gelesen
+MAX_BODY_BYTES = 1024
+
+
+async def read_limited_body(request: Request) -> bytes:
+    content_length = request.headers.get("content-length")
+    if content_length and content_length.isdigit() and int(content_length) > MAX_BODY_BYTES:
+        raise HTTPException(status_code=413, detail="Request body too large")
+    body = bytearray()
+    async for chunk in request.stream():
+        body += chunk
+        if len(body) > MAX_BODY_BYTES:
+            raise HTTPException(status_code=413, detail="Request body too large")
+    return bytes(body)
 
 
 @app.post("/generate-ascii", response_class=PlainTextResponse)
 async def generate_ascii(request: Request):
-    data = (await request.body()).decode()[:MAX_INPUT_LENGTH]
+    data = (await read_limited_body(request)).decode("utf-8", errors="replace")[:MAX_INPUT_LENGTH]
     font   = request.query_params.get("font",   "standard")
     effect = request.query_params.get("effect", "none")
     border = request.query_params.get("border", "none")
@@ -106,4 +140,4 @@ def read_index():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=2000)
+    uvicorn.run(app, host="0.0.0.0", port=2000, server_header=False, limit_concurrency=64)
