@@ -9,8 +9,8 @@ deploymentName: dos-ascii
 service:
   name: dos-ascii-svc
   type: ClusterIP
-  port: 8080
-  targetPort: 8080
+  port: 2000
+  targetPort: 2000
 
 # Nur bei replicaCount > 1 gerendert
 podDisruptionBudget:

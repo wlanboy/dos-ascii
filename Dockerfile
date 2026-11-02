@@ -36,6 +36,6 @@ COPY --chown=appuser:appuser static/ /app/static/
 # Use non-root user
 USER appuser
 
-EXPOSE 8080
+EXPOSE 2000
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "2000"]
