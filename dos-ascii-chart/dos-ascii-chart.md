@@ -6,7 +6,7 @@ gesteuert über den Schalter `ingress.controller`.
 
 ## Komponenten
 
-- **Deployment** (`templates/deployment.yaml`) – `replicaCount` Replicas von `registry.gmk.lan/dos-ascii`, Startup-, Liveness- und Readiness-Probe auf `probes.path` (Default `/fonts`, die App hat keinen eigenen Health-Endpoint), gehärteter `securityContext` (non-root, read-only Root-FS, keine Capabilities) und ein kleines `emptyDir` für `/tmp`.
+- **Deployment** (`templates/deployment.yaml`) – `replicaCount` Replicas von `registry.gmk.lan/dos-ascii`, Startup-, Liveness- und Readiness-Probe auf `probes.path` (Default `/fonts`, die App hat keinen eigenen Health-Endpoint), gehärteter `securityContext` (non-root, read-only Root-FS, keine Capabilities), kein gemountetes ServiceAccount-Token (`automountServiceAccountToken: false`), keine Service-Links als Env-Variablen und ein kleines `emptyDir` für `/tmp`.
 - **PodDisruptionBudget** (`templates/pdb.yaml`, nur bei `podDisruptionBudget.enabled: true` und `replicaCount > 1`).
 - **Service** (`templates/service.yaml`) – ClusterIP-Service auf Port 2000.
 - **Gateway** / **VirtualService** (nur bei `ingress.controller: istio`) – Istio-Routing, HTTPS zusätzlich bei `certManager.enabled: true`.

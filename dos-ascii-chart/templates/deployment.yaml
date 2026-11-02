@@ -15,6 +15,9 @@ spec:
         sidecar.istio.io/inject: "true"
         {{- end }}
     spec:
+      # Die App spricht nicht mit der Kubernetes-API und braucht keine Service-Env-Variablen
+      automountServiceAccountToken: false
+      enableServiceLinks: false
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       {{- if and .Values.topologySpread.enabled (gt (int .Values.replicaCount) 1) }}
