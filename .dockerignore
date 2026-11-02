@@ -1,0 +1,13 @@
+.git
+.gitignore
+.github
+.venv
+.ruff_cache
+__pycache__
+*.py[oc]
+*.md
+*.log
+dos-ascii-chart/
+.idea/
+.vscode/
+.DS_Store
