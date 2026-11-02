@@ -6,7 +6,7 @@ gesteuert über den Schalter `ingress.controller`.
 
 ## Komponenten
 
-- **Deployment** (`templates/deployment.yaml`) – `replicaCount` Replicas von `wlanboy/dos-ascii`, Startup-, Liveness- und Readiness-Probe auf `probes.path` (Default `/fonts`, die App hat keinen eigenen Health-Endpoint), gehärteter `securityContext` (non-root, read-only Root-FS, keine Capabilities) und ein kleines `emptyDir` für `/tmp`.
+- **Deployment** (`templates/deployment.yaml`) – `replicaCount` Replicas von `registry.gmk.lan/dos-ascii`, Startup-, Liveness- und Readiness-Probe auf `probes.path` (Default `/fonts`, die App hat keinen eigenen Health-Endpoint), gehärteter `securityContext` (non-root, read-only Root-FS, keine Capabilities) und ein kleines `emptyDir` für `/tmp`.
 - **PodDisruptionBudget** (`templates/pdb.yaml`, nur bei `podDisruptionBudget.enabled: true` und `replicaCount > 1`).
 - **Service** (`templates/service.yaml`) – ClusterIP-Service auf Port 8080.
 - **Gateway** / **VirtualService** (nur bei `ingress.controller: istio`) – Istio-Routing, HTTPS zusätzlich bei `certManager.enabled: true`.
@@ -19,7 +19,7 @@ Die Ingress-Templates prüfen zusätzlich per `.Capabilities.APIVersions.Has`, o
 
 | Key | Beschreibung | Default |
 |---|---|---|
-| `image.repository` / `image.tag` / `image.pullPolicy` | Container-Image | `wlanboy/dos-ascii`, `latest`, `IfNotPresent` |
+| `image.repository` / `image.tag` / `image.pullPolicy` | Container-Image | `registry.gmk.lan/dos-ascii`, `latest`, `Always` |
 | `replicaCount` | Anzahl Replicas | `1` |
 | `deploymentName` | Name für Deployment und Ingress-Ressourcen | `dos-ascii` |
 | `service.name` / `service.type` | Service-Objekt | `dos-ascii-svc`, `ClusterIP` |

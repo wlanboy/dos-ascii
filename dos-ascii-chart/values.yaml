@@ -1,7 +1,7 @@
 image:
-  repository: wlanboy/dos-ascii
+  repository: registry.gmk.lan/dos-ascii
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 replicaCount: 1
 deploymentName: dos-ascii
