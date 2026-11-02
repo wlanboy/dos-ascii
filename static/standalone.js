@@ -314,3 +314,20 @@ function render(art) {
     document.getElementById('status-chars').textContent =
         'CHARS: ' + document.getElementById('input-text').value.length;
 }
+
+// ── Event bindings ────────────────────────────────────
+// Keine Inline-Handler/-Styles im HTML, damit die CSP ohne 'unsafe-inline' auskommt
+const ACTIONS = {
+    newFile, copyAscii, copyMarkdown, setFont, setFigletFont, setEffect, setBorder,
+    toggleGlow, toggleScroller, setColor, toggleMode, generateASCII,
+};
+
+document.querySelectorAll('[data-menu]').forEach(el => {
+    el.addEventListener('click', e => toggleMenu(e, el.dataset.menu));
+});
+document.querySelectorAll('[data-action]').forEach(el => {
+    el.addEventListener('click', () => ACTIONS[el.dataset.action](el.dataset.arg));
+});
+document.querySelectorAll('[data-swatch]').forEach(el => {
+    el.style.background = COLORS[el.dataset.swatch];
+});

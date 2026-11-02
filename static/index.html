@@ -26,9 +26,9 @@
         <!-- Menu Bar -->
         <div class="menu-bar">
 
-            <span class="menu-item" id="menu-file" onclick="toggleMenu(event,'dropdown-file')">File
+            <span class="menu-item" id="menu-file" data-menu="dropdown-file">File
                 <div class="dropdown" id="dropdown-file">
-                    <div class="dropdown-item" onclick="newFile()">
+                    <div class="dropdown-item" data-action="newFile">
                         <span>New</span>
                         <span class="shortcut">Ctrl+N</span>
                     </div>
@@ -40,290 +40,290 @@
                 </div>
             </span>
 
-            <span class="menu-item" id="menu-edit" onclick="toggleMenu(event,'dropdown-edit')">Edit
+            <span class="menu-item" id="menu-edit" data-menu="dropdown-edit">Edit
                 <div class="dropdown" id="dropdown-edit">
-                    <div class="dropdown-item" onclick="copyAscii()">
+                    <div class="dropdown-item" data-action="copyAscii">
                         <span>Copy ASCII Art</span>
                         <span class="shortcut">Ctrl+C</span>
                     </div>
-                    <div class="dropdown-item" onclick="copyMarkdown()">
+                    <div class="dropdown-item" data-action="copyMarkdown">
                         <span>Copy as Markdown</span>
                         <span class="shortcut">Ctrl+M</span>
                     </div>
                 </div>
             </span>
 
-            <span class="menu-item" id="menu-view" onclick="toggleMenu(event,'dropdown-view')">View
+            <span class="menu-item" id="menu-view" data-menu="dropdown-view">View
                 <div class="dropdown" id="dropdown-view">
                     <div class="dropdown-label">── Display Font ────────</div>
-                    <div class="dropdown-item" onclick="setFont('courier')">
+                    <div class="dropdown-item" data-action="setFont" data-arg="courier">
                         <span><span class="check" id="check-font-courier">✓</span> Courier New</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFont('vt323')">
+                    <div class="dropdown-item" data-action="setFont" data-arg="vt323">
                         <span><span class="check" id="check-font-vt323"> </span> VT323</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFont('sharetech')">
+                    <div class="dropdown-item" data-action="setFont" data-arg="sharetech">
                         <span><span class="check" id="check-font-sharetech"> </span> Share Tech Mono</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFont('ibmplex')">
+                    <div class="dropdown-item" data-action="setFont" data-arg="ibmplex">
                         <span><span class="check" id="check-font-ibmplex"> </span> IBM Plex Mono</span>
                     </div>
                 </div>
             </span>
 
-            <span class="menu-item" id="menu-style" onclick="toggleMenu(event,'dropdown-style')">Style
+            <span class="menu-item" id="menu-style" data-menu="dropdown-style">Style
                 <div class="dropdown" id="dropdown-style">
                     <div class="dropdown-label">── Classic DOS ─────────</div>
-                    <div class="dropdown-item" onclick="setFigletFont('standard')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="standard">
                         <span><span class="check" id="check-figlet-standard">✓</span> Standard</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('banner')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="banner">
                         <span><span class="check" id="check-figlet-banner"> </span> Banner</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('banner3')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="banner3">
                         <span><span class="check" id="check-figlet-banner3"> </span> Banner 3</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('big')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="big">
                         <span><span class="check" id="check-figlet-big"> </span> Big</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('block')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="block">
                         <span><span class="check" id="check-figlet-block"> </span> Block</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('colossal')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="colossal">
                         <span><span class="check" id="check-figlet-colossal"> </span> Colossal</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('digital')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="digital">
                         <span><span class="check" id="check-figlet-digital"> </span> Digital</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('chunky')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="chunky">
                         <span><span class="check" id="check-figlet-chunky"> </span> Chunky</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('broadway')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="broadway">
                         <span><span class="check" id="check-figlet-broadway"> </span> Broadway</span>
                     </div>
                     <hr class="dropdown-separator">
                     <div class="dropdown-label">── Demoscene ───────────</div>
-                    <div class="dropdown-item" onclick="setFigletFont('doom')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="doom">
                         <span><span class="check" id="check-figlet-doom"> </span> Doom</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('speed')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="speed">
                         <span><span class="check" id="check-figlet-speed"> </span> Speed</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('slant')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="slant">
                         <span><span class="check" id="check-figlet-slant"> </span> Slant</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('lean')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="lean">
                         <span><span class="check" id="check-figlet-lean"> </span> Lean</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('graffiti')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="graffiti">
                         <span><span class="check" id="check-figlet-graffiti"> </span> Graffiti</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('epic')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="epic">
                         <span><span class="check" id="check-figlet-epic"> </span> Epic</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('doh')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="doh">
                         <span><span class="check" id="check-figlet-doh"> </span> DOH (Mega)</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('bloody')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="bloody">
                         <span><span class="check" id="check-figlet-bloody"> </span> Bloody</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('poison')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="poison">
                         <span><span class="check" id="check-figlet-poison"> </span> Poison</span>
                     </div>
                     <hr class="dropdown-separator">
                     <div class="dropdown-label">── Retro / C64 ─────────</div>
-                    <div class="dropdown-item" onclick="setFigletFont('ogre')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="ogre">
                         <span><span class="check" id="check-figlet-ogre"> </span> Ogre</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('roman')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="roman">
                         <span><span class="check" id="check-figlet-roman"> </span> Roman</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('script')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="script">
                         <span><span class="check" id="check-figlet-script"> </span> Script</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('cosmic')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="cosmic">
                         <span><span class="check" id="check-figlet-cosmic"> </span> Cosmic</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('starwars')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="starwars">
                         <span><span class="check" id="check-figlet-starwars"> </span> Star Wars</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('gothic')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="gothic">
                         <span><span class="check" id="check-figlet-gothic"> </span> Gothic</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('ghost')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="ghost">
                         <span><span class="check" id="check-figlet-ghost"> </span> Ghost</span>
                     </div>
                     <hr class="dropdown-separator">
                     <div class="dropdown-label">── 3D ──────────────────</div>
-                    <div class="dropdown-item" onclick="setFigletFont('3-d')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="3-d">
                         <span><span class="check" id="check-figlet-3-d"> </span> 3-D</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('3d-ascii')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="3d-ascii">
                         <span><span class="check" id="check-figlet-3d-ascii"> </span> 3D ASCII</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('larry3d')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="larry3d">
                         <span><span class="check" id="check-figlet-larry3d"> </span> Larry 3D</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('isometric1')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="isometric1">
                         <span><span class="check" id="check-figlet-isometric1"> </span> Isometric 1</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('isometric2')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="isometric2">
                         <span><span class="check" id="check-figlet-isometric2"> </span> Isometric 2</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('isometric3')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="isometric3">
                         <span><span class="check" id="check-figlet-isometric3"> </span> Isometric 3</span>
                     </div>
-                    <div class="dropdown-item" onclick="setFigletFont('isometric4')">
+                    <div class="dropdown-item" data-action="setFigletFont" data-arg="isometric4">
                         <span><span class="check" id="check-figlet-isometric4"> </span> Isometric 4</span>
                     </div>
                 </div>
             </span>
 
-            <span class="menu-item" id="menu-effects" onclick="toggleMenu(event,'dropdown-effects')">Effects
+            <span class="menu-item" id="menu-effects" data-menu="dropdown-effects">Effects
                 <div class="dropdown" id="dropdown-effects">
                     <div class="dropdown-label">── Text Effect ─────────</div>
-                    <div class="dropdown-item" onclick="setEffect('none')">
+                    <div class="dropdown-item" data-action="setEffect" data-arg="none">
                         <span><span class="check" id="check-effect-none">✓</span> None</span>
                     </div>
-                    <div class="dropdown-item" onclick="setEffect('shadow')">
+                    <div class="dropdown-item" data-action="setEffect" data-arg="shadow">
                         <span><span class="check" id="check-effect-shadow"> </span> Shadow  ░▒</span>
                     </div>
-                    <div class="dropdown-item" onclick="setEffect('mirror')">
+                    <div class="dropdown-item" data-action="setEffect" data-arg="mirror">
                         <span><span class="check" id="check-effect-mirror"> </span> Mirror  ↔</span>
                     </div>
-                    <div class="dropdown-item" onclick="setEffect('flip')">
+                    <div class="dropdown-item" data-action="setEffect" data-arg="flip">
                         <span><span class="check" id="check-effect-flip"> </span> Flip    ↕</span>
                     </div>
                     <hr class="dropdown-separator">
                     <div class="dropdown-label">── Border ──────────────</div>
-                    <div class="dropdown-item" onclick="setBorder('none')">
+                    <div class="dropdown-item" data-action="setBorder" data-arg="none">
                         <span><span class="check" id="check-border-none">✓</span> No Border</span>
                     </div>
-                    <div class="dropdown-item" onclick="setBorder('single')">
+                    <div class="dropdown-item" data-action="setBorder" data-arg="single">
                         <span><span class="check" id="check-border-single"> </span> Single  ┌─┐</span>
                     </div>
-                    <div class="dropdown-item" onclick="setBorder('double')">
+                    <div class="dropdown-item" data-action="setBorder" data-arg="double">
                         <span><span class="check" id="check-border-double"> </span> Double  ╔═╗</span>
                     </div>
-                    <div class="dropdown-item" onclick="setBorder('block')">
+                    <div class="dropdown-item" data-action="setBorder" data-arg="block">
                         <span><span class="check" id="check-border-block"> </span> Block   █▀█</span>
                     </div>
                     <hr class="dropdown-separator">
                     <div class="dropdown-label">── Display ─────────────</div>
-                    <div class="dropdown-item" onclick="toggleGlow()">
+                    <div class="dropdown-item" data-action="toggleGlow">
                         <span><span class="check" id="check-glow"> </span> Neon Glow</span>
                     </div>
-                    <div class="dropdown-item" onclick="toggleScroller()">
+                    <div class="dropdown-item" data-action="toggleScroller">
                         <span><span class="check" id="check-scroller"> </span> Demo Scroller</span>
                     </div>
                 </div>
             </span>
 
-            <span class="menu-item" id="menu-options" onclick="toggleMenu(event,'dropdown-options')">Colors
+            <span class="menu-item" id="menu-options" data-menu="dropdown-options">Colors
                 <div class="dropdown" id="dropdown-options">
                     <div class="dropdown-label">── DOS / ANSI ───────────</div>
-                    <div class="dropdown-item" onclick="setColor('green')">
-                        <span><span class="swatch" style="background:#0f0"></span> Classic Green</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="green">
+                        <span><span class="swatch" data-swatch="green"></span> Classic Green</span>
                         <span class="check" id="check-color-green">✓</span>
                     </div>
-                    <div class="dropdown-item" onclick="setColor('amber')">
-                        <span><span class="swatch" style="background:#ffb000"></span> Amber</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="amber">
+                        <span><span class="swatch" data-swatch="amber"></span> Amber</span>
                         <span class="check" id="check-color-amber"> </span>
                     </div>
-                    <div class="dropdown-item" onclick="setColor('cyan')">
-                        <span><span class="swatch" style="background:#0ff"></span> Cyan</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="cyan">
+                        <span><span class="swatch" data-swatch="cyan"></span> Cyan</span>
                         <span class="check" id="check-color-cyan"> </span>
                     </div>
-                    <div class="dropdown-item" onclick="setColor('white')">
-                        <span><span class="swatch" style="background:#fff;border-color:#888"></span> White</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="white">
+                        <span><span class="swatch light" data-swatch="white"></span> White</span>
                         <span class="check" id="check-color-white"> </span>
                     </div>
-                    <div class="dropdown-item" onclick="setColor('yellow')">
-                        <span><span class="swatch" style="background:#ff0"></span> Neon Yellow</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="yellow">
+                        <span><span class="swatch" data-swatch="yellow"></span> Neon Yellow</span>
                         <span class="check" id="check-color-yellow"> </span>
                     </div>
-                    <div class="dropdown-item" onclick="setColor('orange')">
-                        <span><span class="swatch" style="background:#ff6600"></span> Orange</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="orange">
+                        <span><span class="swatch" data-swatch="orange"></span> Orange</span>
                         <span class="check" id="check-color-orange"> </span>
                     </div>
-                    <div class="dropdown-item" onclick="setColor('magenta')">
-                        <span><span class="swatch" style="background:#f0f"></span> Magenta</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="magenta">
+                        <span><span class="swatch" data-swatch="magenta"></span> Magenta</span>
                         <span class="check" id="check-color-magenta"> </span>
                     </div>
-                    <div class="dropdown-item" onclick="setColor('pink')">
-                        <span><span class="swatch" style="background:#ff69b4"></span> Hot Pink</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="pink">
+                        <span><span class="swatch" data-swatch="pink"></span> Hot Pink</span>
                         <span class="check" id="check-color-pink"> </span>
                     </div>
-                    <div class="dropdown-item" onclick="setColor('blue')">
-                        <span><span class="swatch" style="background:#00bfff"></span> Electric Blue</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="blue">
+                        <span><span class="swatch" data-swatch="blue"></span> Electric Blue</span>
                         <span class="check" id="check-color-blue"> </span>
                     </div>
                     <hr class="dropdown-separator">
                     <div class="dropdown-label">── C64 Palette ──────────</div>
-                    <div class="dropdown-item" onclick="setColor('c64_white')">
-                        <span><span class="swatch" style="background:#ffffff;border-color:#888"></span> C64 White</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="c64_white">
+                        <span><span class="swatch light" data-swatch="c64_white"></span> C64 White</span>
                         <span class="check" id="check-color-c64_white"> </span>
                     </div>
-                    <div class="dropdown-item" onclick="setColor('c64_cyan')">
-                        <span><span class="swatch" style="background:#70a4b2"></span> C64 Cyan</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="c64_cyan">
+                        <span><span class="swatch" data-swatch="c64_cyan"></span> C64 Cyan</span>
                         <span class="check" id="check-color-c64_cyan"> </span>
                     </div>
-                    <div class="dropdown-item" onclick="setColor('c64_green')">
-                        <span><span class="swatch" style="background:#588d43"></span> C64 Green</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="c64_green">
+                        <span><span class="swatch" data-swatch="c64_green"></span> C64 Green</span>
                         <span class="check" id="check-color-c64_green"> </span>
                     </div>
-                    <div class="dropdown-item" onclick="setColor('c64_blue')">
-                        <span><span class="swatch" style="background:#352879"></span> C64 Blue</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="c64_blue">
+                        <span><span class="swatch" data-swatch="c64_blue"></span> C64 Blue</span>
                         <span class="check" id="check-color-c64_blue"> </span>
                     </div>
-                    <div class="dropdown-item" onclick="setColor('c64_yellow')">
-                        <span><span class="swatch" style="background:#b8c76f"></span> C64 Yellow</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="c64_yellow">
+                        <span><span class="swatch" data-swatch="c64_yellow"></span> C64 Yellow</span>
                         <span class="check" id="check-color-c64_yellow"> </span>
                     </div>
-                    <div class="dropdown-item" onclick="setColor('c64_purple')">
-                        <span><span class="swatch" style="background:#6f3d86"></span> C64 Purple</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="c64_purple">
+                        <span><span class="swatch" data-swatch="c64_purple"></span> C64 Purple</span>
                         <span class="check" id="check-color-c64_purple"> </span>
                     </div>
-                    <div class="dropdown-item" onclick="setColor('c64_red')">
-                        <span><span class="swatch" style="background:#68372b"></span> C64 Red</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="c64_red">
+                        <span><span class="swatch" data-swatch="c64_red"></span> C64 Red</span>
                         <span class="check" id="check-color-c64_red"> </span>
                     </div>
-                    <div class="dropdown-item" onclick="setColor('c64_orange')">
-                        <span><span class="swatch" style="background:#6f4f25"></span> C64 Orange</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="c64_orange">
+                        <span><span class="swatch" data-swatch="c64_orange"></span> C64 Orange</span>
                         <span class="check" id="check-color-c64_orange"> </span>
                     </div>
-                    <div class="dropdown-item" onclick="setColor('c64_brown')">
-                        <span><span class="swatch" style="background:#433900"></span> C64 Brown</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="c64_brown">
+                        <span><span class="swatch" data-swatch="c64_brown"></span> C64 Brown</span>
                         <span class="check" id="check-color-c64_brown"> </span>
                     </div>
-                    <div class="dropdown-item" onclick="setColor('c64_lightred')">
-                        <span><span class="swatch" style="background:#9a6759"></span> C64 Lt. Red</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="c64_lightred">
+                        <span><span class="swatch" data-swatch="c64_lightred"></span> C64 Lt. Red</span>
                         <span class="check" id="check-color-c64_lightred"> </span>
                     </div>
-                    <div class="dropdown-item" onclick="setColor('c64_darkgrey')">
-                        <span><span class="swatch" style="background:#444444"></span> C64 Dk. Grey</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="c64_darkgrey">
+                        <span><span class="swatch" data-swatch="c64_darkgrey"></span> C64 Dk. Grey</span>
                         <span class="check" id="check-color-c64_darkgrey"> </span>
                     </div>
-                    <div class="dropdown-item" onclick="setColor('c64_grey')">
-                        <span><span class="swatch" style="background:#6c6c6c"></span> C64 Grey</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="c64_grey">
+                        <span><span class="swatch" data-swatch="c64_grey"></span> C64 Grey</span>
                         <span class="check" id="check-color-c64_grey"> </span>
                     </div>
-                    <div class="dropdown-item" onclick="setColor('c64_lightgreen')">
-                        <span><span class="swatch" style="background:#9ad284"></span> C64 Lt. Green</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="c64_lightgreen">
+                        <span><span class="swatch" data-swatch="c64_lightgreen"></span> C64 Lt. Green</span>
                         <span class="check" id="check-color-c64_lightgreen"> </span>
                     </div>
-                    <div class="dropdown-item" onclick="setColor('c64_lightblue')">
-                        <span><span class="swatch" style="background:#6c5eb5"></span> C64 Lt. Blue</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="c64_lightblue">
+                        <span><span class="swatch" data-swatch="c64_lightblue"></span> C64 Lt. Blue</span>
                         <span class="check" id="check-color-c64_lightblue"> </span>
                     </div>
-                    <div class="dropdown-item" onclick="setColor('c64_lightgrey')">
-                        <span><span class="swatch" style="background:#959595"></span> C64 Lt. Grey</span>
+                    <div class="dropdown-item" data-action="setColor" data-arg="c64_lightgrey">
+                        <span><span class="swatch" data-swatch="c64_lightgrey"></span> C64 Lt. Grey</span>
                         <span class="check" id="check-color-c64_lightgrey"> </span>
                     </div>
                 </div>
             </span>
 
-            <span class="menu-item" id="menu-help" onclick="toggleMenu(event,'dropdown-help')">Help
+            <span class="menu-item" id="menu-help" data-menu="dropdown-help">Help
                 <div class="dropdown" id="dropdown-help">
                     <div class="dropdown-item">
                         <span>Generate ASCII Art</span>
@@ -345,7 +345,7 @@
                 </div>
             </span>
             <!--
-            <button class="mode-btn" id="mode-btn" onclick="toggleMode()" style="margin-left:auto">[ C64 ]</button>
+            <button class="mode-btn" id="mode-btn" data-action="toggleMode" style="margin-left:auto">[ C64 ]</button>
             -->
         </div>
 
@@ -364,7 +364,7 @@
             </div>
 
             <div class="btn-row">
-                <button class="dos-btn" onclick="generateASCII()" id="gen-btn">[ GENERATE ]</button>
+                <button class="dos-btn" data-action="generateASCII" id="gen-btn">[ GENERATE ]</button>
             </div>
 
             <hr class="divider">
@@ -374,7 +374,7 @@
         </div>
 
         <!-- Demo Scroller -->
-        <div class="scroller-bar" id="scroller-bar" style="display:none">
+        <div class="scroller-bar" id="scroller-bar" hidden>
             <span class="scroller-text" id="scroller-text">*** DOS ASCII ART GENERATOR v2.0 *** WELCOME TO THE DEMOSCENE *** USE THE STYLE MENU TO PICK YOUR FONT *** EFFECTS: SHADOW, MIRROR, FLIP *** BORDERS: SINGLE, DOUBLE, BLOCK *** C64 PALETTE ACTIVE *** GREETINGS TO ALL ASCII ARTISTS WORLDWIDE *** CODED IN PYTHON + FASTAPI ***&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
         </div>
 
