@@ -33,9 +33,10 @@ RUN groupadd -r appuser && useradd -r -g appuser -u 1000 appuser
 COPY --chown=appuser:appuser main.py /app/
 COPY --chown=appuser:appuser static/ /app/static/
 
-# Use non-root user
-USER appuser
+# Use non-root user (numerisch, damit runAsNonRoot im Pod das prüfen kann)
+USER 1000:1000
 
 EXPOSE 2000
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "2000"]
+# Kein "server: uvicorn"-Header, ab 64 offenen Verbindungen antwortet Uvicorn mit 503
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "2000", "--no-server-header", "--limit-concurrency", "64"]
