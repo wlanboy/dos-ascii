@@ -9,6 +9,8 @@ spec:
   routes:
     - match: {{ range $i, $h := .Values.ingress.hosts }}{{ if $i }} || {{ end }}Host(`{{ $h }}`){{ end }}
       kind: Rule
+      middlewares:
+        - name: {{ .Values.deploymentName }}-body-limit
       services:
         - name: {{ .Values.service.name }}
           port: {{ .Values.service.port }}

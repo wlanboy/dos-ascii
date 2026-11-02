@@ -69,6 +69,9 @@ ingress:
     - dos-ascii.tp.lan
     - dos-ascii.gmk.lan
     - dos-ascii.localhost
+  # Body-Limit schon vor der App (Traefik: Buffering-Middleware, Istio: Envoy-Buffer-Filter im Sidecar)
+  # Die App selbst bricht ebenfalls bei 1024 Bytes mit 413 ab
+  maxRequestBodyBytes: 1024
 
 istio:
   gatewayName: dos-ascii-gw

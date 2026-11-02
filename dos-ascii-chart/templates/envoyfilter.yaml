@@ -1,0 +1,27 @@
+{{- if and (eq .Values.ingress.controller "istio") (.Capabilities.APIVersions.Has "networking.istio.io/v1alpha3") }}
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: {{ .Values.deploymentName }}-body-limit
+spec:
+  workloadSelector:
+    labels:
+      app: {{ .Values.deploymentName }}
+  configPatches:
+    - applyTo: HTTP_FILTER
+      match:
+        context: SIDECAR_INBOUND
+        listener:
+          filterChain:
+            filter:
+              name: envoy.filters.network.http_connection_manager
+              subFilter:
+                name: envoy.filters.http.router
+      patch:
+        operation: INSERT_BEFORE
+        value:
+          name: envoy.filters.http.buffer
+          typed_config:
+            "@type": type.googleapis.com/envoy.extensions.filters.http.buffer.v3.Buffer
+            max_request_bytes: {{ .Values.ingress.maxRequestBodyBytes }}
+{{- end }}

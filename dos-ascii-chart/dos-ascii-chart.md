@@ -8,9 +8,11 @@ gesteuert über den Schalter `ingress.controller`.
 
 - **Deployment** (`templates/deployment.yaml`) – `replicaCount` Replicas von `registry.gmk.lan/dos-ascii`, Startup-, Liveness- und Readiness-Probe auf `probes.path` (Default `/fonts`, die App hat keinen eigenen Health-Endpoint), gehärteter `securityContext` (non-root, read-only Root-FS, keine Capabilities) und ein kleines `emptyDir` für `/tmp`.
 - **PodDisruptionBudget** (`templates/pdb.yaml`, nur bei `podDisruptionBudget.enabled: true` und `replicaCount > 1`).
-- **Service** (`templates/service.yaml`) – ClusterIP-Service auf Port 8080.
+- **Service** (`templates/service.yaml`) – ClusterIP-Service auf Port 2000.
 - **Gateway** / **VirtualService** (nur bei `ingress.controller: istio`) – Istio-Routing, HTTPS zusätzlich bei `certManager.enabled: true`.
+- **EnvoyFilter** (`templates/envoyfilter.yaml`, nur bei `ingress.controller: istio`) – Buffer-Filter im Sidecar des Pods, lehnt Bodies über `ingress.maxRequestBodyBytes` mit 413 ab.
 - **IngressRoute** (nur bei `ingress.controller: traefik`) – Traefik-Routing der konfigurierten Hosts.
+- **Middleware** (`templates/traefik-middleware.yaml`, nur bei `ingress.controller: traefik`) – Buffering-Middleware mit `ingress.maxRequestBodyBytes`, an der IngressRoute eingehängt.
 - **Certificate** (nur bei `certManager.enabled: true`) – TLS-Secret für das Istio-Gateway.
 
 Die Ingress-Templates prüfen zusätzlich per `.Capabilities.APIVersions.Has`, ob die CRDs im Cluster vorhanden sind.
@@ -32,6 +34,7 @@ Die Ingress-Templates prüfen zusätzlich per `.Capabilities.APIVersions.Has`, o
 | `topologySpread.enabled` / `.whenUnsatisfiable` | Pods über Nodes verteilen (nur bei `replicaCount > 1`) | `true`, `ScheduleAnyway` |
 | `ingress.controller` | `istio`, `traefik` oder `none` | `istio` |
 | `ingress.hosts` | Externe Hostnamen | `dos-ascii.tp.lan`, `dos-ascii.gmk.lan`, `dos-ascii.localhost` |
+| `ingress.maxRequestBodyBytes` | Maximale Body-Größe am Ingress, größere Requests bekommen 413 | `1024` |
 | `istio.gatewayName` / `istio.gatewayNamespace` | Istio-Gateway und Namespace des TLS-Secrets | `dos-ascii-gw`, `istio-ingress` |
 | `istio.tls.secretName` | TLS-Secret des Gateways | `dos-ascii-tls` |
 | `traefik.entryPoints` | Traefik Entrypoints | `[web, websecure]` |
