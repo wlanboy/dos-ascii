@@ -1,5 +1,8 @@
+from typing import Literal, get_args
+
 import pyfiglet
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -27,7 +30,7 @@ async def add_security_headers(request: Request, call_next):
     response.headers.update(SECURITY_HEADERS)
     return response
 
-FIGLET_FONTS = [
+FontName = Literal[
     # Classic DOS
     "standard", "banner", "banner3", "big", "block", "colossal", "digital", "chunky", "broadway",
     # Demoscene
@@ -37,6 +40,10 @@ FIGLET_FONTS = [
     # 3D
     "3-d", "3d-ascii", "larry3d", "isometric1", "isometric2", "isometric3", "isometric4",
 ]
+Effect = Literal["none", "shadow", "mirror", "flip"]
+BorderStyle = Literal["none", "single", "double", "block"]
+
+FIGLET_FONTS = list(get_args(FontName))
 
 
 def apply_shadow(art: str) -> str:
@@ -103,17 +110,8 @@ async def read_limited_body(request: Request) -> bytes:
     return bytes(body)
 
 
-@app.post("/generate-ascii", response_class=PlainTextResponse)
-async def generate_ascii(request: Request):
-    data = (await read_limited_body(request)).decode("utf-8", errors="replace")[:MAX_INPUT_LENGTH]
-    font   = request.query_params.get("font",   "standard")
-    effect = request.query_params.get("effect", "none")
-    border = request.query_params.get("border", "none")
-
-    if font not in FIGLET_FONTS:
-        font = "standard"
-
-    art = pyfiglet.figlet_format(data, font=font)
+def render_ascii(text: str, font: FontName, effect: Effect, border: BorderStyle) -> str:
+    art = pyfiglet.figlet_format(text, font=font)
 
     if effect == "shadow":
         art = apply_shadow(art)
@@ -126,6 +124,23 @@ async def generate_ascii(request: Request):
         art = apply_border(art, border)
 
     return art
+
+
+@app.post("/generate-ascii", response_class=PlainTextResponse)
+async def generate_ascii(
+    request: Request,
+    font: FontName = "standard",
+    effect: Effect = "none",
+    border: BorderStyle = "none",
+):
+    data = (await read_limited_body(request)).decode("utf-8", errors="replace")[:MAX_INPUT_LENGTH]
+    # pyfiglet ist synchron und CPU-lastig, im Event-Loop würde es den ganzen Server blockieren
+    return await run_in_threadpool(render_ascii, data, font, effect, border)
+
+
+@app.get("/healthz", response_class=PlainTextResponse)
+def healthz():
+    return "ok"
 
 
 @app.get("/fonts")
