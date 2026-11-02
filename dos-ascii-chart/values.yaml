@@ -1,0 +1,93 @@
+image:
+  repository: wlanboy/dos-ascii
+  tag: latest
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+deploymentName: dos-ascii
+
+service:
+  name: dos-ascii-svc
+  type: ClusterIP
+  port: 8080
+  targetPort: 8080
+
+# Nur bei replicaCount > 1 gerendert
+podDisruptionBudget:
+  enabled: false
+  maxUnavailable: 1
+
+# Bei replicaCount > 1: Pods bevorzugt auf verschiedene Nodes verteilen
+topologySpread:
+  enabled: true
+  whenUnsatisfiable: ScheduleAnyway
+
+resources:
+  requests:
+    memory: "64Mi"
+    cpu: "50m"
+  limits:
+    memory: "128Mi"
+    cpu: "200m"
+
+# Die App hat keinen eigenen Health-Endpoint, /fonts ist ein leichter GET ohne Seiteneffekte
+probes:
+  path: /fonts
+  startup:
+    initialDelaySeconds: 2
+    periodSeconds: 5
+    failureThreshold: 12     # 60s Fenster für langsame Starts
+  liveness:
+    periodSeconds: 10
+    timeoutSeconds: 2
+    failureThreshold: 3
+  readiness:
+    periodSeconds: 5
+    timeoutSeconds: 2
+    failureThreshold: 3
+
+# UID/GID entsprechen dem appuser aus dem Dockerfile
+podSecurityContext:
+  fsGroup: 1000
+  seccompProfile:
+    type: RuntimeDefault
+
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  readOnlyRootFilesystem: true   # /tmp ist ein emptyDir
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+
+ingress:
+  # istio | traefik | none
+  controller: istio
+  hosts:
+    - dos-ascii.tp.lan
+    - dos-ascii.gmk.lan
+    - dos-ascii.localhost
+
+istio:
+  gatewayName: dos-ascii-gw
+  gatewayNamespace: "istio-ingress"
+  tls:
+    enabled: true
+    secretName: dos-ascii-tls
+
+traefik:
+  entryPoints:
+    - web
+    - websecure
+
+certManager:
+  enabled: true
+  issuerRef:
+    kind: ClusterIssuer
+    name: "local-ca-issuer"
+  dnsNames:
+    - dos-ascii.tp.lan
+    - dos-ascii.gmk.lan
+    - dos-ascii.localhost

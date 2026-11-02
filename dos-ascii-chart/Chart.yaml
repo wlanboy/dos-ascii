@@ -1,0 +1,6 @@
+apiVersion: v2
+name: dos-ascii
+description: ASCII-Art-Generator im MS-DOS-Stil
+type: application
+version: 0.1.0
+appVersion: "latest"
