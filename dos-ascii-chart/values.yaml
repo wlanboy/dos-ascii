@@ -30,9 +30,8 @@ resources:
     memory: "128Mi"
     cpu: "200m"
 
-# Die App hat keinen eigenen Health-Endpoint, /fonts ist ein leichter GET ohne Seiteneffekte
 probes:
-  path: /fonts
+  path: /healthz
   startup:
     initialDelaySeconds: 2
     periodSeconds: 5
