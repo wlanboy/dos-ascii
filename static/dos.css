@@ -227,6 +227,10 @@ body::after {
     margin-right: 4px;
 }
 
+.swatch.light {
+    border-color: #888;
+}
+
 .check {
     display: inline-block;
     width: 12px;
