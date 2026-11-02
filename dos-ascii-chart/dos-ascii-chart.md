@@ -9,13 +9,13 @@ gesteuert über den Schalter `ingress.controller`.
 - **Deployment** (`templates/deployment.yaml`) – `replicaCount` Replicas von `registry.gmk.lan/dos-ascii`, Startup-, Liveness- und Readiness-Probe auf `probes.path` (Default `/fonts`, die App hat keinen eigenen Health-Endpoint), gehärteter `securityContext` (non-root, read-only Root-FS, keine Capabilities), kein gemountetes ServiceAccount-Token (`automountServiceAccountToken: false`), keine Service-Links als Env-Variablen und ein kleines `emptyDir` für `/tmp`.
 - **PodDisruptionBudget** (`templates/pdb.yaml`, nur bei `podDisruptionBudget.enabled: true` und `replicaCount > 1`).
 - **Service** (`templates/service.yaml`) – ClusterIP-Service auf Port 2000.
-- **Gateway** / **VirtualService** (nur bei `ingress.controller: istio`) – Istio-Routing, HTTPS zusätzlich bei `certManager.enabled: true`.
+- **Gateway** / **VirtualService** (nur bei `ingress.controller: istio`) – Istio-Routing, HTTPS zusätzlich bei `certManager.enabled: true` und vorhandenem cert-manager.
 - **EnvoyFilter** (`templates/envoyfilter.yaml`, nur bei `ingress.controller: istio`) – Buffer-Filter im Sidecar des Pods, lehnt Bodies über `ingress.maxRequestBodyBytes` mit 413 ab.
 - **IngressRoute** (nur bei `ingress.controller: traefik`) – Traefik-Routing der konfigurierten Hosts.
 - **Middleware** (`templates/traefik-middleware.yaml`, nur bei `ingress.controller: traefik`) – Buffering-Middleware mit `ingress.maxRequestBodyBytes`, an der IngressRoute eingehängt.
-- **Certificate** (nur bei `certManager.enabled: true`) – TLS-Secret für das Istio-Gateway.
+- **Certificate** (nur bei `certManager.enabled: true` und installiertem cert-manager) – TLS-Secret für das Istio-Gateway.
 
-Die Ingress-Templates prüfen zusätzlich per `.Capabilities.APIVersions.Has`, ob die CRDs im Cluster vorhanden sind.
+Die Ingress- und Certificate-Templates prüfen zusätzlich per `.Capabilities.APIVersions.Has`, ob die CRDs im Cluster vorhanden sind.
 
 ## Konfiguration (`values.yaml`)
 
