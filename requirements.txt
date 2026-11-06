@@ -6,7 +6,7 @@ annotated-types==0.8.0
     # via pydantic
 anyio==4.16.0
     # via starlette
-click==8.5.0
+click==8.5.1
     # via uvicorn
 fastapi==0.162.0
     # via dos-ascii
@@ -16,9 +16,9 @@ idna==3.20
     # via anyio
 opentelemetry-api==1.45.2
     # via fastapi
-pydantic==2.14.2
+pydantic==2.14.3
     # via fastapi
-pydantic-core==2.50.2
+pydantic-core==2.50.4
     # via pydantic
 pyfiglet==1.0.4
     # via dos-ascii
@@ -32,7 +32,7 @@ typing-extensions==4.16.0
     #   pydantic
     #   pydantic-core
     #   typing-inspection
-typing-inspection==0.4.4
+typing-inspection==0.4.5
     # via
     #   fastapi
     #   pydantic
